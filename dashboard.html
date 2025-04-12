@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Perusahaan - JobConnect</title>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-left">
+        <div class="logo">JobConnect</div>
+      </div>
+      <div class="nav-links">
+        <span id="company-name"></span>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-container">
+    <h2>Dashboard Perusahaan</h2>
+
+    <section class="form-section">
+      <h3>Posting Lowongan Baru</h3>
+      <form id="job-form">
+        <input type="text" id="job-title" placeholder="Posisi" required />
+        <input type="text" id="job-location" placeholder="Lokasi" required />
+        <textarea id="job-description" placeholder="Deskripsi Pekerjaan" required></textarea>
+      
+        <!-- Tambahan input untuk gaji -->
+        <input type="number" id="job-salary" placeholder="Gaji (opsional)" />
+      
+        <!-- Tambahan pilihan untuk tipe pekerjaan -->
+        <select id="job-type">
+          <option value="full-time">Full-time</option>
+          <option value="part-time">Part-time</option>
+        </select>
+        <button type="submit">Posting Lowongan</button>
+      </form>
+      
+    </section>
+
+    <section class="jobs-section">
+      <h3>Lowongan yang Diposting</h3>
+      <div id="jobs-list"></div>
+    </section>
+  </main>
+  
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

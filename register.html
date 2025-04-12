@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - JobConnect</title>
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Daftar ke JobConnect</h2>
+    <div class="toggle-buttons">
+      <button id="btn-jobseeker" class="active">Jobseeker</button>
+      <button id="btn-company">Perusahaan</button>
+    </div>
+
+    <!-- Form Jobseeker -->
+    <form id="form-jobseeker" class="active">
+      <input type="text" id="nama-jobseeker" placeholder="Nama Lengkap" required />
+      <input type="email" id="email-jobseeker" placeholder="Email" required />
+      <input type="password" id="password-jobseeker" placeholder="Password" required />
+      <button type="submit">Daftar sebagai Jobseeker</button>
+    </form>
+
+    <!-- Form Perusahaan -->
+    <form id="form-company">
+      <input type="text" id="nama-company" placeholder="Nama Perusahaan" required />
+      <input type="email" id="email-company" placeholder="Email" required />
+      <input type="password" id="password-company" placeholder="Password" required />
+      <button type="submit">Daftar sebagai Perusahaan</button>
+    </form>
+  </div>
+
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- Register Script -->
+  <script src="js/register.js"></script>
+</body>
+</html>

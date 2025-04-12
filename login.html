@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - JobConnect</title>
+  <link rel="stylesheet" href="css/login.css"/>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login ke JobConnect</h2>
+    
+    <!-- Toggle Role -->
+    <div class="toggle-buttons">
+      <button id="btn-jobseeker" class="active">Jobseeker</button>
+      <button id="btn-company">Perusahaan</button>
+    </div>
+
+    <!-- Form Login -->
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+
+      <!-- Menyimpan role yang dipilih -->
+      <input type="hidden" id="selected-role" value="jobseeker" />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p id="login-error" style="color:red;"></p>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- Script Login -->
+  <script src="js/login.js"></script>
+</body>
+</html>

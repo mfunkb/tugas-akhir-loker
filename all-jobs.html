@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semua Lowongan Kerja</title>
+  <link rel="stylesheet" href="css/lowongan.css">
+</head>
+<body>
+  <header>
+    <h1>Semua Lowongan Kerja</h1>
+    <button id="back-btn">Kembali</button>
+  </header>
+
+  <section id="jobs-container">
+    <p>Memuat lowongan...</p>
+  </section>
+
+ <!-- Modal Wrapper -->
+ <div class="modal" id="job-modal">
+  <div class="modal-content">
+    <span class="close" id="modal-close">&times;</span>
+    <h2 id="modal-title"></h2> <!-- Title Modal -->
+    <p><strong><i class="fas fa-building"></i> Perusahaan:</strong> <span id="modal-company"></span></p>
+    <p><strong><i class="fas fa-map-marker-alt"></i> Lokasi:</strong> <span id="modal-location"></span></p>
+    <p><strong>Deskripsi:</strong></p>
+    <p id="modal-description"></p>
+    <p><small><strong><i class="fas fa-calendar-alt"></i> Diposting:</strong> <span id="modal-posted"></span></small></p>
+
+    <!-- Form Lamaran -->
+    <form id="apply-form" style="display: none;">
+      <input type="text" id="name" placeholder="Nama Lengkap" required />
+      <input type="url" id="cv-link" placeholder="Link Google Drive CV" required />
+      <button type="submit" class="btn-apply" id="apply-btn">Kirim Lamaran</button>
+    </form>
+
+    <p id="login-warning" style="color: red; display: none;">Silakan login untuk melamar pekerjaan ini.</p>
+  </div>
+</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_x09ePbtXQ96lLvXzrLkGUb1U3klBfOM",
+      authDomain: "loker-bc23d.firebaseapp.com",
+      databaseURL: "https://loker-bc23d-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "loker-bc23d",
+      storageBucket: "loker-bc23d.appspot.com",
+      messagingSenderId: "292212374092",
+      appId: "1:292212374092:web:ed2111258acffc1c0752e9",
+      measurementId: "G-QECZ68YHJN"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+    let currentUser;
+
+    // Persistence agar tidak logout saat pindah halaman
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            currentUser = user;
+            fetchAllJobs(); // Load data setelah login
+          } else {
+            alert("Silakan login terlebih dahulu.");
+            window.location.href = "login.html";
+          }
+        });
+      })
+      .catch((error) => {
+        console.error("Gagal set persistence:", error);
+      });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const backBtn = document.getElementById("back-btn");
+      backBtn.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+    });
+
+    function fetchAllJobs() {
+      const container = document.getElementById("jobs-container");
+      container.innerHTML = "<p>Memuat lowongan...</p>";
+
+      const dbRef = ref(db, "users/perusahaan");
+      get(dbRef)
+        .then((snapshot) => {
+          container.innerHTML = "";
+
+          if (snapshot.exists()) {
+            let jobs = [];
+
+            snapshot.forEach((perusahaanSnap) => {
+              const perusahaanData = perusahaanSnap.val();
+              const companyName = perusahaanData.nama || "Perusahaan";
+
+              const lowongan = perusahaanData.lowongan;
+              if (lowongan) {
+                Object.entries(lowongan).forEach(([id, job]) => {
+                  job.jobId = id;
+                  job.companyName = companyName;
+                  jobs.push(job);
+                });
+              }
+            });
+
+            jobs.forEach((job) => {
+              const card = document.createElement("div");
+              card.className = "job-card";
+              card.innerHTML = `
+                <h3>${job.title || "Tanpa Judul"}</h3>
+                <div class="company">${job.companyName}</div>
+                <div class="location">${job.location || "Lokasi tidak tersedia"}</div>
+                <p>${job.description?.substring(0, 100) || "-"}...</p>
+              `;
+
+              card.addEventListener("click", () => {
+                openJobModal(job);
+              });
+
+              container.appendChild(card);
+            });
+          } else {
+            container.innerHTML = "<p>Belum ada lowongan tersedia.</p>";
+          }
+        })
+        .catch((error) => {
+          console.error("Gagal memuat lowongan:", error);
+          container.innerHTML = "<p>Gagal memuat lowongan. Silakan coba lagi nanti.</p>";
+        });
+    }
+
+    function openJobModal(job) {
+      const modalTitle = document.getElementById("modal-title");
+      const modalDescription = document.getElementById("modal-description");
+      const modalLocation = document.getElementById("modal-location");
+      const modalCompany = document.getElementById("modal-company");
+      const applyForm = document.getElementById("apply-form");
+
+      if (modalTitle && modalDescription && modalLocation && modalCompany) {
+        modalTitle.textContent = job.title || "Tanpa Judul";
+        modalDescription.textContent = job.description || "Deskripsi tidak tersedia.";
+        modalLocation.textContent = job.location || "Lokasi tidak tersedia";
+        modalCompany.textContent = job.companyName;
+
+        // Show the apply form if user is logged in
+        if (currentUser) {
+          applyForm.style.display = "block";
+        } else {
+          applyForm.style.display = "none";
+          document.getElementById("login-warning").style.display = "block";
+        }
+
+        const modal = document.getElementById("job-modal");
+        modal.style.display = "block";
+
+        const closeModal = document.getElementById("modal-close");
+        closeModal.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+        const applyBtn = document.getElementById("apply-btn");
+        applyBtn.onclick = () => {
+          const name = document.getElementById("name").value;
+          const cvLink = document.getElementById("cv-link").value;
+
+          if (name && cvLink && currentUser) {
+            submitApplication(job.jobId, name, cvLink);
+          } else if (!currentUser) {
+            alert("Harap login terlebih dahulu untuk melamar.");
+          } else {
+            alert("Harap isi nama dan link CV terlebih dahulu.");
+          }
+        };
+      } else {
+        console.error("Elemen modal tidak ditemukan.");
+      }
+    }
+
+    function submitApplication(jobId, name, cvLink) {
+      const userId = currentUser.uid;
+      const applicationData = {
+        name,
+        cvLink,
+        appliedAt: new Date().toISOString(),
+      };
+
+      set(ref(db, `lamaran/${jobId}/${userId}`), applicationData)
+        .then(() => {
+          alert("Lamaran berhasil dikirim!");
+          document.getElementById("job-modal").style.display = "none";
+        })
+        .catch((error) => {
+          console.error("Gagal mengirim lamaran:", error);
+          alert("Gagal mengirim lamaran. Silakan coba lagi.");
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.toggle-buttons button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background-color: #e0e0e0;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+.toggle-buttons button.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+form {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+form.active {
+  display: flex;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="text"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  background-color: #2196F3;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #1976D2;
+}
+/* Form sembunyi secara default */
+#login-form {
+  display: none;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Saat class active ditambahkan, form muncul */
+#login-form.active {
+  display: flex;
+}
+
+/* Styling tambahan (opsional, biar rapi) */
+#login-form input, #login-form button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#login-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
