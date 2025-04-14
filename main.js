@@ -1,4 +1,4 @@
-// Firebase Config
+// === Firebase Config ===
 const firebaseConfig = {
   apiKey: "AIzaSyA_x09ePbtXQ96lLvXzrLkGUb1U3klBfOM",
   authDomain: "loker-bc23d.firebaseapp.com",
@@ -27,10 +27,14 @@ function setupNavbar() {
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
 
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  }
 }
+
+
 
 // === CEK LOGIN USER ===
 function setupAuthState() {
@@ -143,7 +147,6 @@ function openJobModal(job, companyName) {
   document.getElementById("modal-salary").textContent = job.salary ? `Gaji: ${job.salary}` : "Gaji: Tidak Diberikan";
   document.getElementById("modal-job-type").textContent = job.jobType ? `Tipe: ${job.jobType}` : "Tipe: Tidak Diberikan";
 
-  // Tampilkan modal dengan mengubah display menjadi 'block'
   document.getElementById("job-modal").style.display = "block";
 
   const user = auth.currentUser;
@@ -155,7 +158,6 @@ function openJobModal(job, companyName) {
     document.getElementById("login-warning").style.display = "block";
   }
 
-  // Menambahkan event listener untuk menutup modal
   const closeModalButton = document.getElementById("modal-close");
   if (closeModalButton) {
     closeModalButton.addEventListener("click", () => {
@@ -163,7 +165,6 @@ function openJobModal(job, companyName) {
     });
   }
 
-  // Menutup modal jika klik di luar modal
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("job-modal")) {
       closeJobModal();
@@ -216,55 +217,5 @@ function setupFormLamaran() {
       console.error("Gagal mengirim lamaran:", err);
       alert("Ups! Gagal mengirim lamaran. Coba lagi nanti ya.");
     });
-  });
-}
-
-// === KATEGORI ===
-const categoryCards = document.querySelectorAll(".category-card");
-
-categoryCards.forEach(card => {
-  card.addEventListener("click", () => {
-    const kategori = card.getAttribute("data-kategori");
-    filterByCategory(kategori);
-  });
-});
-
-function filterByCategory(kategori) {
-  const jobsContainer = document.getElementById("jobs-container");
-  jobsContainer.innerHTML = "<p>Loading...</p>";
-
-  db.ref("users/perusahaan").once("value").then((snapshot) => {
-    jobsContainer.innerHTML = "";
-
-    snapshot.forEach(companySnap => {
-      const perusahaan = companySnap.val();
-      const companyName = perusahaan.nama || "Perusahaan";
-      const jobs = perusahaan.lowongan;
-
-      if (jobs) {
-        Object.entries(jobs).forEach(([jobId, job]) => {
-          if (job.kategori === kategori) {
-            job.jobId = jobId;
-            job.companyName = companyName;
-
-            const card = document.createElement("div");
-            card.className = "job-card";
-            card.innerHTML = `
-              <div class="job-content">
-                <h3>${sanitizeHTML(job.title || "Tanpa Judul")}</h3>
-                <div class="company">${sanitizeHTML(companyName)}</div>
-                <div class="salary">${job.salary ? `Gaji: ${sanitizeHTML(job.salary)}` : "Gaji: Tidak Diberikan"}</div>
-              </div>
-            `;
-            card.addEventListener("click", () => openJobModal(job, companyName));
-            jobsContainer.appendChild(card);
-          }
-        });
-      }
-    });
-
-    if (jobsContainer.innerHTML === "") {
-      jobsContainer.innerHTML = `<p>Tidak ada lowongan di kategori <strong>${kategori}</strong>.</p>`;
-    }
   });
 }
