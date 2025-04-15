@@ -150,18 +150,44 @@ body {
 /* Stats */
 .stats {
   display: flex;
+  flex-wrap: wrap; /* penting untuk responsif */
   justify-content: space-around;
-  padding: 40px 0;
+  gap: 20px;
+  padding: 40px 20px;
   text-align: center;
   background-color: #fff;
   margin-top: 40px;
   border-radius: 12px;
 }
 
+.stat-item {
+  flex: 1 1 150px; /* item menyesuaikan lebar layar, minimal 150px */
+  margin: 10px 0;
+}
+
 .stat-item h3 {
   color: #0a66c2;
   font-size: 2rem;
 }
+
+/* === Responsive untuk HP === */
+@media (max-width: 768px) {
+  .stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .stat-item {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .stat-item h3 {
+    font-size: 1.5rem;
+  }
+}
+
 
 /* Job Listings */
 .jobs-grid {
@@ -436,9 +462,8 @@ nav {
   color: #009688;
 }
 
-/* === MODAL === */
-#job-modal {
-  display: none;
+/#job-modal {
+  display: flex; /* ubah dari 'none' ke 'flex' saat modal dibuka lewat JavaScript */
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -464,6 +489,7 @@ nav {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
 
 /* === FORM LAMARAN === */
 #apply-form input,
