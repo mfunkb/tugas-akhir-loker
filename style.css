@@ -462,15 +462,19 @@ nav {
   color: #009688;
 }
 
+/* === MODAL === */
 #job-modal {
   display: flex; /* ubah dari 'none' ke 'flex' saat modal dibuka lewat JavaScript */
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 99;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Memindahkan modal lebih ke atas */
+  padding-top: 50px; /* Memberikan jarak dari atas */
 }
 
 .modal-content {
@@ -480,6 +484,8 @@ nav {
   max-width: 600px;
   width: 90%;
   position: relative;
+  min-height: 200px;
+  margin-top: 50px; /* Memberikan jarak ke bawah */
 }
 
 #modal-close {
@@ -514,6 +520,7 @@ nav {
 #apply-form button:hover {
   background-color: #0056b3;
 }
+
 
 /* === CATEGORY CARDS === */
 .category-card {
