@@ -7,17 +7,17 @@
 }
 
 body {
-  background-color: #f4f6f8;
+  background: linear-gradient(to right, #f8fafc, #e2e8f0);
   color: #333;
   line-height: 1.6;
 }
 
 /* Navbar */
 .navbar {
-  background-color: #1e293b;
+  background: linear-gradient(to right, #1e3a8a, #1e293b);
   color: #fff;
   padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .navbar .container {
@@ -30,18 +30,20 @@ body {
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 #company-name {
   font-weight: 500;
+  font-size: 1.1rem;
 }
 
 #logout-btn {
@@ -49,40 +51,49 @@ body {
   background-color: #ef4444;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 #logout-btn:hover {
   background-color: #dc2626;
+  transform: scale(1.05);
 }
 
 /* Dashboard container */
 .dashboard-container {
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 2rem auto;
 }
 
 .dashboard-container h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
   color: #1e293b;
+  font-size: 2rem;
 }
 
 /* Form Posting Lowongan */
 .form-section {
   background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  margin-bottom: 2.5rem;
+  transition: transform 0.3s ease;
+}
+
+.form-section:hover {
+  transform: translateY(-2px);
 }
 
 .form-section h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   color: #111827;
+  font-size: 1.5rem;
 }
 
 #job-form input,
@@ -91,52 +102,70 @@ body {
 #job-form button {
   width: 100%;
   margin-bottom: 1rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
   font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+#job-form input:focus,
+#job-form textarea:focus,
+#job-form select:focus {
+  border-color: #3b82f6;
+  outline: none;
 }
 
 #job-form textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
 #job-form button {
-  background-color: #3b82f6;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
   color: #fff;
   border: none;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #job-form button:hover {
-  background-color: #2563eb;
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  transform: scale(1.02);
 }
 
 /* Lowongan yang Diposting */
 .jobs-section h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #111827;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 #jobs-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .job-card {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to right, #ffffff, #f9fafb);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.job-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .job-card .info {
@@ -144,54 +173,77 @@ body {
 }
 
 .job-card h4 {
-  font-size: 1.25rem;
-  color: #1f2937;
-  font-weight: bold;
+  font-size: 1.3rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
 }
 
 .job-card p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #6b7280;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
 }
 
-/* Pindahkan tombol ke pojok kanan dan perkecil ukuran */
+/* Tombol Aksi */
 .job-card .actions {
   display: flex;
   gap: 0.75rem;
-  margin-left: auto; /* Menggeser tombol ke kanan */
+  margin-left: auto;
 }
 
+/* Semua Tombol */
 .job-card button {
-  padding: 0.4rem 0.75rem; /* Perkecil padding tombol */
-  font-size: 0.875rem; /* Ukuran font lebih kecil */
+  padding: 0.5rem 1.1rem;
+  font-size: 0.875rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 /* Tombol Edit */
 .job-card .edit-btn {
-  background-color: #facc15;
+  background: linear-gradient(to right, #fde047, #facc15);
   color: #1f2937;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
 .job-card .edit-btn:hover {
-  background-color: #eab308;
-  transform: scale(1.05);
+  background: linear-gradient(to right, #facc15, #eab308);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* Tombol Hapus */
 .job-card .delete-btn {
-  background-color: #ef4444;
+  background: linear-gradient(to right, #f87171, #ef4444);
   color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
 .job-card .delete-btn:hover {
-  background-color: #dc2626;
-  transform: scale(1.05);
+  background: linear-gradient(to right, #ef4444, #dc2626);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -203,7 +255,7 @@ body {
   .job-card {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 
   .job-card .actions {
